@@ -1,0 +1,23 @@
+﻿@namespace FC.Components
+
+@typeparam TData
+
+@implements IDisposable
+
+<h3>Column</h3>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string Property { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+    
+    [CascadingParameter]
+    public FDataTable<TData> DataTable { get; set; } = default!;
+    
+    public void Dispose()
+    {
+        DataTable.RemoveColumn(this);
+    }
+}
