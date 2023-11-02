@@ -1,0 +1,45 @@
+@namespace FC.Components
+
+@implements IFormFieldInput
+
+<input type="number" 
+       value="@Value"
+       @onchange="@OnChange"
+       required="@Required"
+       readonly="@ReadOnly"
+       placeholder="@Placeholder" 
+       max="@Max"
+       min="@Min"
+       size="@Size" />
+
+@code {
+    [Parameter]
+    public dynamic? Value { get; set; }
+    
+    [Parameter]
+    public EventCallback<dynamic?> ValueChanged { get; set; }
+    
+    [Parameter]
+    public string? Placeholder { get; set; }
+    
+    [Parameter]
+    public bool? ReadOnly { get; set; }
+
+    [Parameter]
+    public bool? Required { get; set; }
+
+    [Parameter]
+    public dynamic? Max { get; set; }
+    
+    [Parameter]
+    public dynamic? Min { get; set; }
+    
+    [Parameter]
+    public int? Size { get; set; }
+
+    private async Task OnChange(ChangeEventArgs args)
+    {
+        Value = $"{args.Value}";
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

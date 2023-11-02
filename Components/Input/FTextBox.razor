@@ -1,0 +1,25 @@
+@namespace FC.Components
+
+@implements IFormFieldInput
+
+<input type="text" 
+       value="@Value" 
+       @onchange="@OnChange"
+       @attributes="@InputAttributes" />
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+    
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+    
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? InputAttributes { get; set; }
+
+    private async Task OnChange(ChangeEventArgs args)
+    {
+        Value = $"{args.Value}";
+        await ValueChanged.InvokeAsync(Value);
+    }
+}
